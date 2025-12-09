@@ -1,0 +1,6 @@
+[package]
+name = "five_loaves_of_bread_and_two_fish"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

@@ -26,7 +26,8 @@ fn main() {
     "#;
     println!("{}", game_title);
 
-    // let start_game = false;
+    // start or quit the game //
+    wait_for_start();
 
     let mut has_lunch: bool = false;
     println!(
@@ -41,12 +42,44 @@ fn main() {
 
     let mut current_place = 1;
     while current_place != 0 {
+        if current_place != 1 {
+            print!("\x1B[2J\x1B[1;1H");
+        }
+
         map_game_rooms(current_place, has_lunch);
         let command = get_user_input();
         let (next_place, next_lunch_state) = handle_command(current_place, &command, has_lunch);
 
         current_place = next_place;
         has_lunch = next_lunch_state;
+    }
+
+    println!("Game Over. May your faith guide you.");
+}
+
+// ----------------------------------- NEW HELPER FUNCTION ------------------------------------------ //
+// Waits for the user to type "start" or press Enter, then clears the screen.
+fn wait_for_start() {
+    loop {
+        print!("\nType 'start' to play or 'quit' to exit: ");
+        io::stdout().flush().expect("Failed to flush message");
+
+        let mut input = String::new();
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read user input");
+
+        let command = input.trim().to_lowercase();
+
+        if command == "start" || command.is_empty() {
+            // Clear the terminal after "start"
+            print!("\x1B[2J\x1B[1;1H");
+            break;
+        } else if command == "quit" {
+            std::process::exit(0); // Exit the program immediately
+        } else {
+            println!("Invalid command. Please type 'start' or 'quit'.");
+        }
     }
 }
 
@@ -71,7 +104,7 @@ fn map_game_rooms(place_id: i32, has_lunch: bool) {
             println!("Thousands of people are here. Jesus stands on the high ground (NORTH).");
 
             println!("\n[Possible Commands]");
-            println!("- **MOVE:** 'go north', 'go south', 'go path'"); // 'go path' for Room 2
+            println!("- **MOVE:** 'go north', 'go south', 'go path'");
             println!("- **INTERACT:** 'pray'");
         }
         2 => {
@@ -116,10 +149,9 @@ fn map_game_rooms(place_id: i32, has_lunch: bool) {
 fn handle_command(current_place: i32, command: &str, has_lunch: bool) -> (i32, bool) {
     if command == "quit" {
         println!("Goodbye !");
-        return (0, has_lunch); // Return (0, current state)
+        return (0, has_lunch);
     }
 
-    // We use a variable to track the new lunch state, default is the old state
     let mut new_lunch_state = has_lunch;
 
     let next_place = match current_place {

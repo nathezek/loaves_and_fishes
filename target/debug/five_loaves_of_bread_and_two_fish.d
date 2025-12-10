@@ -1,1 +1,1 @@
-/home/comrade/Documents/learning/rust/games/five_loaves_of_bread_and_two_fish/target/debug/five_loaves_of_bread_and_two_fish: /home/comrade/Documents/learning/rust/games/five_loaves_of_bread_and_two_fish/src/main.rs
+/home/comrade/Documents/learning/rust/games/five_loaves_of_bread_and_two_fish/target/debug/five_loaves_of_bread_and_two_fish: /home/comrade/Documents/learning/rust/games/five_loaves_of_bread_and_two_fish/src/assets/colored_j.txt /home/comrade/Documents/learning/rust/games/five_loaves_of_bread_and_two_fish/src/main.rs
